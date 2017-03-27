@@ -1,0 +1,30 @@
+<html>
+	<head>
+		<!-- <link rel="stylesheet" href="assets/css/bootstrap.min.css"> -->
+    <title>RPG Modular</title>
+    <base href="/">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/customize.css">
+	</head>
+	<body ng-app="rpgApp">
+    <div class="be-wrapper col-md-12">
+      <navbar></navbar>
+      <div ui-view=""></div>
+    </div>
+
+	  <script src="bower_components/angular/angular.min.js"></script>
+    <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
+	  <script src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
+	  <script src="bower_components/angular-socket-io/socket.js"></script>
+	  <script src="bower_components/lodash/dist/lodash.min.js"></script>
+	  <script src="assets/js/socketio.js"></script>
+		<script src="js/app.js"></script>
+		<script src="components/navbar/navbar.controller.js"></script>
+		<script src="components/navbar/navbar.directive.js"></script>
+		<script src="account/login/login.controller.js"></script>
+		<script src="account/signup/signup.controller.js"></script>
+		<script src="room/room.controller.js"></script>
+	</body>
+</html>
+
+<!-- index.html -->

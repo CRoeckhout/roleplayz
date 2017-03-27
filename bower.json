@@ -1,0 +1,24 @@
+{
+  "name": "roleplayz",
+  "description": "RPG modular is a personnal attempt to create a HTML 5 game with a node.js server. Project is about create a RPG interface allowing multiple session and modular(customize) environement for Game Master.",
+  "main": "server.js",
+  "authors": [
+    "Thilun"
+  ],
+  "license": "MIT",
+  "homepage": "",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular-bootstrap": "^2.5.0",
+    "lodash": "^4.17.4",
+    "angular-ui-router": "0.3.2",
+    "angular-socket-io": "^0.7.0"
+  }
+}

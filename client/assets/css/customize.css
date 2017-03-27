@@ -1,0 +1,172 @@
+:root {
+  --elem-color: #B84430;
+  --elem-color-darker: #B84430;
+  --elem-body-color: #ececec;
+  --elem-body-color-medium: #3d3d3d;
+  --elem-body-color-darker: #383838;
+  --text-color: #2c2c2c;
+  --text-color-darker: #2c2c2c;
+  --background-color: #e4e4e4;
+}
+
+/* Customize */
+
+  body {
+    background-color: var(--background-color);
+    color : var(--text-color)
+  }
+
+  h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
+    color: var(--text-color)
+  }
+
+  /* Header */
+
+  .be-top-header {
+    background-color: var(--elem-body-color);
+    border-bottom: 0px solid var(--elem-body-color-darker);
+  }
+
+  .be-top-header .navbar-header .navbar-brand {
+    background-image: url(../img/logo.png);
+    background-size: 100px 50px;
+    width: 205px;
+  }
+
+  .be-top-header .navbar-nav > li > a, .be-top-header .navbar-nav > li > a:hover , .be-top-header .navbar-nav > li > a:focus {
+    color: var(--text-color);
+  }
+
+  /* Pannel */
+  .panel {
+    background-color: var(--elem-body-color)
+  }
+
+  .panel-border {
+    border: 1px solid var(--elem-body-color)
+  }
+
+  .panel-border-color-ouistipix {
+    border-top-color: var(--elem-color)
+  }
+
+  .panel-heading-contrast {
+    background-color: var(--elem-body-color-darker)
+  }
+
+  .panel-default > .panel-heading {
+    color: var(--text-color);
+  }
+
+  /* Button */
+  .btn-ouistipix {
+      color: #fff;
+      background-color: var(--elem-color);
+      border-color: var(--elem-color);
+  }
+
+  .btn-ouistipix:hover, .btn-ouistipix.hover {
+      box-shadow: inset 0 -1px 0 var(--elem-color-darker);
+      background-color: var(--elem-color);
+      border-color: var(--elem-color);
+      border-bottom-color: var(--elem-color-darker);
+  }
+
+  .btn-ouistipix:hover {
+      color: #fff;
+      background-color: var(--elem-color-darker);
+      border-color: var(--elem-color);
+      border-bottom-color: var(--elem-color-darker);
+  }
+
+  .btn-ouistipix:focus {
+      outline-color: #606060;
+  }
+
+  /* Modal */
+  .colored-header-ouistipix .modal-content .modal-header {
+    background-color: var(--elem-body-color-darker);
+  }
+
+  /* DatePicker */
+  ._720kb-datepicker-calendar-header:nth-child(odd) {
+    background: var(--elem-color);
+  }
+
+  ._720kb-datepicker-calendar-header:nth-child(even) {
+    background: var(--elem-color-darker);
+  }
+
+  /* nav-tabs */
+  .custom a {
+    color: var(--elem-color);
+  }
+
+  .custom a:hover, .custom a:focus {
+    color: var(--elem-color-darker);
+    border: none;
+    border-bottom: 2px solid var(--elem-color-darker);
+  }
+
+  .nav-tabs > li.active a, .nav-tabs > li.active a:hover, .nav-tabs > li.active a:focus {
+    background-color: #ffffff;
+    border: none;
+    border-bottom: 2px solid var(--elem-color);
+  }
+
+  .nav-tabs > li a:hover {
+      background: transparent;
+      color: var(--elem-color-darker);
+  }    
+
+  .no-border a:hover,.no-border a:focus {
+    color: var(--elem-color-darker);
+    border: none;
+  }  
+
+  /* Table */
+  .table-striped > tbody > tr:nth-of-type(odd) {
+    background-color: var(--elem-body-color-darker);
+  }
+
+  .table-striped > tbody > tr:nth-of-type(even) {
+    background-color: var(--elem-body-color);
+  }
+
+  .table-striped > tbody > tr:nth-of-type(odd):hover {
+    background-color: var(--elem-body-color-medium);
+  }
+
+  .table-striped > tbody > tr:nth-of-type(even):hover {
+    background-color: var(--elem-body-color-medium);
+  }
+
+  /* Hover Transition */
+
+  .pricing-table-danger.pricing-table-color {
+    transition: background-color 0.3s ease;
+    background-color: #eb6357;
+  }
+  .pricing-table-danger.pricing-table-color:hover {
+    background-color: #e74537;
+  }
+
+  .pricing-table-success.pricing-table-color {
+    transition: background-color 0.3s ease;
+    background-color: #37b358;
+  }
+  .pricing-table-success.pricing-table-color:hover {
+    background-color: #279946;
+  }
+
+  .subTable {
+    
+  }
+  .subTable > td:first-child {
+    padding-left: 95px !important;
+  }
+
+  .subTable > td {
+    padding-top: 6px !important;
+    padding-bottom: 6px !important;
+  }
