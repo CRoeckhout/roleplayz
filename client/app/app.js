@@ -6,23 +6,23 @@ rpgApp.config(function($urlRouterProvider, $stateProvider, $locationProvider) {
   $stateProvider
   .state('login', {
       url: '/login',
-      templateUrl: '/account/login/login.html',
+      templateUrl: '/app/account/login/login.html',
       controller: 'LoginController',
       controllerAs: 'vm'
   })
   .state('signup', {
     url: '/signup',
-    templateUrl: '/account/signup/signup.html',
+    templateUrl: '/app/account/signup/signup.html',
     controller: 'SignupController',
     controllerAs: 'vm'
   })
   .state('room', {
     url: '/room',
-    templateUrl: '/room/room.html',
+    templateUrl: '/app/room/room.html',
     controller: 'RoomController',
     controllerAs: 'vm'
   });
-  $urlRouterProvider.otherwise('/');
+  // $urlRouterProvider.otherwise('/');
   $locationProvider.html5Mode(true);
 })
 
