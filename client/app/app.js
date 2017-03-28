@@ -22,7 +22,7 @@ rpgApp.config(function($urlRouterProvider, $stateProvider, $locationProvider) {
     controller: 'RoomController',
     controllerAs: 'vm'
   });
-  // $urlRouterProvider.otherwise('/');
+  $urlRouterProvider.otherwise('/');
   $locationProvider.html5Mode(true);
 })
 
