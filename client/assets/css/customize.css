@@ -1,18 +1,18 @@
 :root {
   --elem-color: #B84430;
   --elem-color-darker: #B84430;
-  --elem-body-color: #ececec;
+  --elem-body-color: #0a0a0a;
   --elem-body-color-medium: #3d3d3d;
   --elem-body-color-darker: #383838;
-  --text-color: #2c2c2c;
-  --text-color-darker: #2c2c2c;
+  --text-color: #efefef;
+  --text-color-darker: #e2e2e2;
   --background-color: #e4e4e4;
 }
 
 /* Customize */
 
   body {
-    background-color: var(--background-color);
+    background: url(../img/background.jpg);
     color : var(--text-color)
   }
 
@@ -21,6 +21,12 @@
   }
 
   /* Header */
+
+
+  .be-content {
+    margin-left: 0px;
+    padding-top:111px;
+  }
 
   .be-top-header {
     background-color: var(--elem-body-color);
@@ -31,10 +37,14 @@
     background-image: url(../img/logo.png);
     background-size: 100px 50px;
     width: 205px;
+    height: 80px;
   }
 
   .be-top-header .navbar-nav > li > a, .be-top-header .navbar-nav > li > a:hover , .be-top-header .navbar-nav > li > a:focus {
     color: var(--text-color);
+    line-height: 80px;
+    font-size: 16px;
+    font-weight: 600;
   }
 
   /* Pannel */

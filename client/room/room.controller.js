@@ -36,13 +36,18 @@ angular.module('rpgApp').controller('RoomController', function ($scope, mySocket
 	mySocket.on('newPositions',function(data){
 		console.log('fill')
 		canvas.clearRect(0,0,1000,600)
-
 		for(var i = 0; i < data.length; i++) {
 			canvas.fillText(data[i].id.slice(0,6), data[i].x, data[i].y);
-			/*player.update();
+/*			player.update();
 	  	player.render();*/
 	  }
 	})
+
+
+	window.onbeforeunload = function () {
+	    mySocket.emit('trytoDc', mySocket)
+	    mySocket.emit('disconnect', mySocket)
+	};
 
 	document.onkeydown = function(event){
 	 if(event.keyCode === 37) mySocket.emit('keyPress', {inputId : 37, state : true})
@@ -57,5 +62,14 @@ angular.module('rpgApp').controller('RoomController', function ($scope, mySocket
 	 if(event.keyCode === 38) mySocket.emit('keyPress', {inputId : 38, state : false})
 	 if(event.keyCode === 40) mySocket.emit('keyPress', {inputId : 40, state : false})
 	}
+
+var arrow_keys_handler = function(e) {
+    switch(e.keyCode){
+        case 37: case 39: case 38:  case 40: // Arrow keys
+        case 32: e.preventDefault(); break; // Space
+        default: break; // do not block other keys
+    }
+};
+window.addEventListener("keydown", arrow_keys_handler, false);
 
 })

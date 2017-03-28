@@ -3,13 +3,13 @@
     <div class="container">
       <div class="row">
         <div class="col-md-6 col-sm-12 col-xs-12">
-          <canvas id="cnv" width="1000px" height="600px"  style="border: 1px solid #000"></canvas>
+          <canvas id="cnv" width="1000px" height="600px"  style="border: 1px solid #000; background-color:#fff; margin-left: auto;margin-left: auto"></canvas>
         </div>
       </div>
       <div class="row">
         <div class="col-md-6 col-sm-12 col-xs-12" style="padding-top:20px">
-          <button ng-if="!isConnected" ng-click="joinRoom()" class="btn btn-primary">Join the room</button>
-          <button ng-if="isConnected" ng-click="leaveRoom()" class="btn btn-danger">Leave the room</button>
+          <button ng-if="!isConnected" ng-click="joinRoom()" class="btn btn-xl btn-primary">Join the room</button>
+          <button ng-if="isConnected" ng-click="leaveRoom()" class="btn btn-xl btn-danger">Leave the room</button>
         </div>
       </div>
     </div>

@@ -35,17 +35,17 @@ module.exports.default = function(io) {
   clientsList[client.id] = client;
   var player = {}
 
-    client.on('newPlayerJoinning', function (data) {
-      console.log('player is joinning')
-      player = Player(client.id)
-      playersList[client.id] = player;
-      client.emit('newPlayerJoinned', player);
-    });
+  client.on('newPlayerJoinning', function (data) {
+    console.log('player is joinning')
+    player = Player(client.id)
+    playersList[client.id] = player;
+    client.emit('newPlayerJoinned', player);
+  });
 
-    client.on('PlayerLeaving', function (data) {
-        delete playersList[client.id];
-        client.emit('playerLeft', data.id);
-    });
+  client.on('PlayerLeaving', function (data) {
+      delete playersList[client.id];
+      client.emit('playerLeft', data.id);
+  });
 
   client.on('keyPress', function(data){
     if(data.inputId === 37) player.pressingLeft = data.state;
@@ -54,11 +54,16 @@ module.exports.default = function(io) {
     if(data.inputId === 40) player.pressingDown = data.state;
   })
 
-    client.on('disconnect',function(client){
-      console.log('deco')
-      delete clientsList[client.id];
-      delete playersList[client.id];
-    })
+  client.on('disconnect',function(){
+    console.log('deco')
+    console.log(client.id)
+    delete clientsList[client.id];
+    delete playersList[client.id];
+  })
+
+  client.on('trytoDc',function(client){
+    console.log('trytoDc')
+  })
 
   });
 }
