@@ -1,5 +1,6 @@
 
 var Player = require('../api/player/player.model');
+var User = require('../api/user/user.model');
 var Sequelize  = require('sequelize');
 var sequelize;
 
@@ -12,4 +13,5 @@ var db = {
 };
 
 db.Player = Player(db.Sequelize,db.sequelize)
+db.User = User(db.Sequelize,db.sequelize)
 module.exports = db;

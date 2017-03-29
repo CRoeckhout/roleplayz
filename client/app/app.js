@@ -20,7 +20,8 @@ rpgApp.config(function($urlRouterProvider, $stateProvider, $locationProvider) {
     url: '/room',
     templateUrl: '/app/room/room.html',
     controller: 'RoomController',
-    controllerAs: 'vm'
+    controllerAs: 'vm',
+    authenticate:true
   });
   $urlRouterProvider.otherwise('/');
   $locationProvider.html5Mode(true);
@@ -48,7 +49,7 @@ rpgApp.config(function($urlRouterProvider, $stateProvider, $locationProvider) {
 
   return self
 })
-/*.factory('Auth',function($http){
+.factory('Auth',function($http){
   self = {
     active : true,
 
@@ -56,35 +57,44 @@ rpgApp.config(function($urlRouterProvider, $stateProvider, $locationProvider) {
         email,
         password
       }, callback) {
-        return $http.post('/auth/local', {
+        return $http.post('/api/users/me', {
             email: email,
             password: password
           })
           .then(res => {
-            console.log(res)
-            $cookies.put('token', res.data.token);
+            return res.data
+            /*$cookies.put('token', res.data.token);
             currentUser = User.get();
-            return currentUser.$promise;
+            return currentUser.$promise;*/
           })
-          .then(user => {
+          /*.then(user => {
             safeCb(callback)(null, user);
             return user;
-          })
+          })*/
           .catch(err => {
-            Auth.logout();
+            if(err.status == 404)
+            return err.data
+            /*Auth.logout();
             safeCb(callback)(err.data);
-            return $q.reject(err.data);
+            return $q.reject(err.data);*/
           });
       },
+
+    isAuthenticated() {
+      return true
+    }
   }
 
   return self
-})*/
+})
 
-/*rpgApp.run(function($rootScope) {
-  $rootScope.$on('$stateChangeStart', function(event, next, nextParams, current) {
-    if (next.name === 'logout' && current && current.name && !current.authenticate) {
-      next.referrer = current.name;
+
+.run(function ($rootScope, $state, Auth) {
+  $rootScope.$on("$stateChangeStart", function(event, toState, toParams, fromState, fromParams){
+    if (toState.authenticate && !Auth.isAuthenticated()){
+      // User isn’t authenticated
+      $state.transitionTo("login");
+      event.preventDefault(); 
     }
   });
-});*/
+});

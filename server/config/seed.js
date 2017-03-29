@@ -1,10 +1,12 @@
 var _ = require('lodash');
+var crypto = require('crypto');
 var Promise = require('bluebird');
 var db = require('./database.js');
 var Player = db.Player;
+var User = db.User;
 
 Promise.each([
-	() => Player.sync()
+  () => Player.sync({force:true})
   .then(() => Player.destroy({ where: {} }))
   .then(() => {
     return Player.bulkCreate([{
@@ -28,6 +30,20 @@ Promise.each([
     }])
     .then(() => {
       console.log('finished populating players');
+    });
+  }),
+
+	() => User.sync({force:true})
+  .then(() => User.destroy({ where: {} }))
+  .then(() => {
+    return User.bulkCreate([{
+      _id: "097b1ccc-e3f7-4b29-8eb2-9380e8eb050b",
+      email: "Thilun003@gmail.com",
+      username: "Thilun",
+      password: crypto.createHash('sha1').update(crypto.createHash('md5').update("kad").digest("hex")).digest("hex"),
+    }])
+    .then(() => {
+      console.log('finished populating users');
     });
   }),
 ], _.attempt);
