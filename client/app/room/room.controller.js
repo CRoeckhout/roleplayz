@@ -1,15 +1,18 @@
 'use strict';
 
 
-angular.module('rpgApp').controller('RoomController', function ($scope, mySocket) {
+angular.module('rpgApp').controller('RoomController', function ($scope, mySocket, Actions) {
 	console.log('room')
 	var vm = $scope
 	vm.isConnected = false;
 	vm.player = {}
-	// var socket = io({transports: ['websocket'], upgrade: false});
 
 	var canvasElem = document.getElementById("cnv");
 	var canvas = document.getElementById("cnv").getContext("2d");
+
+	canvasElem.width = 945;
+	canvasElem.height = 630;
+
 
 	canvas.font = "30px Arial";
 
@@ -59,17 +62,17 @@ angular.module('rpgApp').controller('RoomController', function ($scope, mySocket
 	};
 
 	document.onkeydown = function(event){
-	 if(event.keyCode === 37) mySocket.emit('keyPress', {inputId : 37, state : true})
-	 if(event.keyCode === 39) mySocket.emit('keyPress', {inputId : 39, state : true})
-	 if(event.keyCode === 38) mySocket.emit('keyPress', {inputId : 38, state : true})
-	 if(event.keyCode === 40) mySocket.emit('keyPress', {inputId : 40, state : true})
+	 if(Actions.get(event.keyCode) === 'left') mySocket.emit('keyPress', {action : 'left', state : true}) // Left
+	 if(Actions.get(event.keyCode) === 'right') mySocket.emit('keyPress', {action : 'right', state : true}) // Right
+	 if(Actions.get(event.keyCode) === 'up') mySocket.emit('keyPress', {action : 'up', state : true}) // Up
+	 if(Actions.get(event.keyCode) === 'down') mySocket.emit('keyPress', {action : 'down', state : true}) // Down
 	}
 
 	document.onkeyup = function(event){
-	 if(event.keyCode === 37) mySocket.emit('keyPress', {inputId : 37, state : false})
-	 if(event.keyCode === 39) mySocket.emit('keyPress', {inputId : 39, state : false})
-	 if(event.keyCode === 38) mySocket.emit('keyPress', {inputId : 38, state : false})
-	 if(event.keyCode === 40) mySocket.emit('keyPress', {inputId : 40, state : false})
+	 if(Actions.get(event.keyCode) === 'left') mySocket.emit('keyPress', {action : 'left', state : false}) // Left
+	 if(Actions.get(event.keyCode) === 'right') mySocket.emit('keyPress', {action : 'right', state : false}) // Right
+	 if(Actions.get(event.keyCode) === 'up') mySocket.emit('keyPress', {action : 'up', state : false}) // Up
+	 if(Actions.get(event.keyCode) === 'down') mySocket.emit('keyPress', {action : 'down', state : false}) // Down
 	}
 
 	var arrow_keys_handler = function(e) {

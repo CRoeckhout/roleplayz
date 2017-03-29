@@ -180,3 +180,20 @@
     padding-top: 6px !important;
     padding-bottom: 6px !important;
   }
+
+
+@media screen and (max-width: 768px) {
+  #cnv{
+    width: 375px;
+    height: 250px;
+    border:1px solid #000;    
+  }
+}
+
+@media screen and (max-width: 992px) {
+  #cnv{
+    width: 600px;
+    height: 400px;
+    border:1px solid #000;    
+  }
+}

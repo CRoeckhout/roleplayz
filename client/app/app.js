@@ -28,7 +28,27 @@ rpgApp.config(function($urlRouterProvider, $stateProvider, $locationProvider) {
 
 .factory('mySocket', function (socketFactory) {
   return socketFactory();
-});
+})
+
+.factory('Actions',function(){
+  self = {
+    active : false,
+    left : [37,81],
+    right : [39,68],
+    up : [38,90],
+    down : [40,83]
+  }
+
+  self.get = function(keyCode) {
+    if(self.left.includes(keyCode)) return 'left'
+    if(self.right.includes(keyCode)) return 'right'
+    if(self.up.includes(keyCode)) return 'up'
+    if(self.down.includes(keyCode)) return 'down'
+  };
+
+
+  return self
+ })
 
 /*rpgApp.run(function($rootScope) {
   $rootScope.$on('$stateChangeStart', function(event, next, nextParams, current) {

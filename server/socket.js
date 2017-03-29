@@ -48,10 +48,10 @@ module.exports.default = function(io) {
   });
 
   client.on('keyPress', function(data){
-    if(data.inputId === 37) player.pressingLeft = data.state;
-    if(data.inputId === 39) player.pressingRight = data.state;
-    if(data.inputId === 38) player.pressingUp = data.state;
-    if(data.inputId === 40) player.pressingDown = data.state;
+    if(data.action === 'left') player.pressingLeft = data.state;
+    if(data.action === 'right') player.pressingRight = data.state;
+    if(data.action === 'up') player.pressingUp = data.state;
+    if(data.action === 'down') player.pressingDown = data.state;
   })
 
   client.on('disconnect',function(){
