@@ -1,11 +1,12 @@
 'use strict';
 
 
-angular.module('rpgApp').controller('RoomController', function ($scope, mySocket, Actions) {
+angular.module('rpgApp').controller('RoomController', function ($scope, mySocket, Controls) {
 	console.log('room')
 	var vm = $scope
 	vm.isConnected = false;
 	vm.player = {}
+	vm.isFocused = true;
 
 	var canvasElem = document.getElementById("cnv");
 	var canvas = document.getElementById("cnv").getContext("2d");
@@ -14,7 +15,6 @@ angular.module('rpgApp').controller('RoomController', function ($scope, mySocket
 
 	canvasElem.width = 945;
 	canvasElem.height = 630;
-
 
 	canvas.font = "30px Arial";
 
@@ -64,10 +64,10 @@ angular.module('rpgApp').controller('RoomController', function ($scope, mySocket
 	gradient.addColorStop("1.0","red");
 	canvas.fillStyle=gradient;*/
 
-	canvas.fillStyle = "#FF0000";
+	canvas.fillStyle = "#e82e1e";
 
 	mySocket.on('newPositions',function(data){
-		canvas.clearRect(0,0,1000,600)
+		canvas.clearRect(0,0,945,630)
 		for(var i = 0; i < data.length; i++) {
 			canvas.fillText(data[i].id.slice(0,6), data[i].x - 30, data[i].y - 10);
 			canvas.fillRect(data[i].x, data[i].y, 40, 40);
@@ -82,26 +82,45 @@ angular.module('rpgApp').controller('RoomController', function ($scope, mySocket
 	};
 
 	document.onkeydown = function(event){
-	 if(Actions.get(event.keyCode) === 'left') mySocket.emit('keyPress', {action : 'left', state : true}) // Left
-	 if(Actions.get(event.keyCode) === 'right') mySocket.emit('keyPress', {action : 'right', state : true}) // Right
-	 if(Actions.get(event.keyCode) === 'up') mySocket.emit('keyPress', {action : 'up', state : true}) // Up
-	 if(Actions.get(event.keyCode) === 'down') mySocket.emit('keyPress', {action : 'down', state : true}) // Down
+		if(vm.isFocused){
+	 		if(Controls.get(event.keyCode) === 'left') mySocket.emit('keyPress', {action : 'left', state : true}) // Left
+	 		if(Controls.get(event.keyCode) === 'right') mySocket.emit('keyPress', {action : 'right', state : true}) // Right
+	 		if(Controls.get(event.keyCode) === 'up') mySocket.emit('keyPress', {action : 'up', state : true}) // Up
+	 		if(Controls.get(event.keyCode) === 'down') mySocket.emit('keyPress', {action : 'down', state : true}) // Down
+	 	}
 	}
 
 	document.onkeyup = function(event){
-	 if(Actions.get(event.keyCode) === 'left') mySocket.emit('keyPress', {action : 'left', state : false}) // Left
-	 if(Actions.get(event.keyCode) === 'right') mySocket.emit('keyPress', {action : 'right', state : false}) // Right
-	 if(Actions.get(event.keyCode) === 'up') mySocket.emit('keyPress', {action : 'up', state : false}) // Up
-	 if(Actions.get(event.keyCode) === 'down') mySocket.emit('keyPress', {action : 'down', state : false}) // Down
+		if(vm.isFocused){
+			if(Controls.get(event.keyCode) === 'left') mySocket.emit('keyPress', {action : 'left', state : false}) // Left
+			if(Controls.get(event.keyCode) === 'right') mySocket.emit('keyPress', {action : 'right', state : false}) // Right
+			if(Controls.get(event.keyCode) === 'up') mySocket.emit('keyPress', {action : 'up', state : false}) // Up
+			if(Controls.get(event.keyCode) === 'down') mySocket.emit('keyPress', {action : 'down', state : false}) // Down
+		}
 	}
 
 	var arrow_keys_handler = function(e) {
 	    switch(e.keyCode){
-	        case 37: case 39: case 38:  case 40: // Arrow keys
+	        case 37:
+	        case 39: 
+	        case 38:  
+	        case 40: // Arrow keys
 	        case 32: e.preventDefault(); break; // Space
 	        default: break; // do not block other keys
 	    }
 	};
+
 	window.addEventListener("keydown", arrow_keys_handler, false);
+
+	chatInput.addEventListener('blur', function(){
+		window.addEventListener("keydown", arrow_keys_handler, false);
+		vm.isFocused = true
+	})
+
+	chatInput.addEventListener('focus', function(){
+		mySocket.emit('chatInputFocused')
+		window.removeEventListener("keydown", arrow_keys_handler, false);
+		vm.isFocused = false
+	})
 
 })

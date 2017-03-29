@@ -9,6 +9,8 @@ module.exports.default = function(app) {
   // app.use(fileUpload());
   app.use('/api/players', require('./api/player'));
 
+  app.use('/auth', require('./auth'));
+
   // app.use('/auth', require('./auth').default);
 
   app.use('/public', express.static('public'));

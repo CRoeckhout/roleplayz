@@ -29,8 +29,7 @@ rpgApp.config(function($urlRouterProvider, $stateProvider, $locationProvider) {
 .factory('mySocket', function (socketFactory) {
   return socketFactory();
 })
-
-.factory('Actions',function(){
+.factory('Controls',function(){
   self = {
     active : false,
     left : [37,81],
@@ -48,7 +47,39 @@ rpgApp.config(function($urlRouterProvider, $stateProvider, $locationProvider) {
 
 
   return self
- })
+})
+/*.factory('Auth',function($http){
+  self = {
+    active : true,
+
+    login({
+        email,
+        password
+      }, callback) {
+        return $http.post('/auth/local', {
+            email: email,
+            password: password
+          })
+          .then(res => {
+            console.log(res)
+            $cookies.put('token', res.data.token);
+            currentUser = User.get();
+            return currentUser.$promise;
+          })
+          .then(user => {
+            safeCb(callback)(null, user);
+            return user;
+          })
+          .catch(err => {
+            Auth.logout();
+            safeCb(callback)(err.data);
+            return $q.reject(err.data);
+          });
+      },
+  }
+
+  return self
+})*/
 
 /*rpgApp.run(function($rootScope) {
   $rootScope.$on('$stateChangeStart', function(event, next, nextParams, current) {

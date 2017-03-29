@@ -2,6 +2,7 @@
 
 var path = require('path');
 var uuid = require('uuid');
+var _ = require('lodash');
 var clientsList = {};
 var playersList = {};
 
@@ -10,18 +11,21 @@ function Player(id){
     id : id,
     x : 250,
     y : 250,
-    pressingLeft : false,
-    pressingRight : false,
-    pressingUp : false,
-    pressingDown : false,
     speed : 10
   }
 
+  self.actions = {
+    left : false,
+    right : false,
+    up : false,
+    down : false
+  }
+
   self.updatePosition = function () {
-    if(self.pressingLeft) this.x -= self.speed;
-    if(self.pressingRight) this.x += self.speed;
-    if(self.pressingUp) this.y -= self.speed;
-    if(self.pressingDown) this.y += self.speed;
+    if(self.actions.left) this.x -= self.speed;
+    if(self.actions.right) this.x += self.speed;
+    if(self.actions.up) this.y -= self.speed;
+    if(self.actions.down) this.y += self.speed;
   }
 
   return self
@@ -48,10 +52,18 @@ module.exports.default = function(io) {
   });
 
   client.on('keyPress', function(data){
-    if(data.action === 'left') player.pressingLeft = data.state;
-    if(data.action === 'right') player.pressingRight = data.state;
-    if(data.action === 'up') player.pressingUp = data.state;
-    if(data.action === 'down') player.pressingDown = data.state;
+    console.log(player.actions.left, player.actions.right, player.actions.up, player.actions.down)
+    if(data.action === 'left') player.actions.left = data.state;
+    if(data.action === 'right') player.actions.right = data.state;
+    if(data.action === 'up') player.actions.up = data.state;
+    if(data.action === 'down') player.actions.down = data.state;
+  })
+
+  client.on('chatInputFocused', function(data){
+    player.actions.left = false;
+    player.actions.right = false;
+    player.actions.up = false;
+    player.actions.down = false;
   })
 
   client.on('sendMessage',function(message){
@@ -70,13 +82,8 @@ module.exports.default = function(io) {
 
   client.on('disconnect',function(){
     console.log('deco')
-    console.log(client.id)
     delete clientsList[client.id];
     delete playersList[client.id];
-  })
-
-  client.on('trytoDc',function(client){
-    console.log('trytoDc')
   })
 
   });
