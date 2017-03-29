@@ -1,10 +1,10 @@
 <div class="be-content">
   <div class="main-content container-fluid">
-    <div class="container">
+    <!-- <div class="container"> -->
       <div class="row">
-        <div class="col-lg-10 col-md-12" style="text-align: center;">
+        <div class="col-lg-7 col-lg-offset-1 col-md-12" style="text-align: center;">
           <div class="row">
-            <canvas id="cnv" style="border: 1px solid #000; background-color:#2c2c2c; margin-left: auto;margin-left: auto"></canvas>
+            <canvas id="cnv" style="border-radius: 2px; border: 1px double #000; background-color:#2c2c2c; margin-left: auto;margin-left: auto"></canvas>
           </div>
           <div class="row">
             <div class="form-group login-submit">
@@ -13,18 +13,19 @@
             </div>
           </div>
         </div>
-        <div class="col-lg-2 col-md-12" style="text-align: center;">
-          <div class="row">
-          </div>
-          <div class="row">
-            <div class="form-group login-submit">
-              <!-- <button ng-if="!isConnected" ng-click="joinRoom()" class="btn btn-xl btn-primary">Join the room</button>
-              <button ng-if="isConnected" ng-click="leaveRoom()" class="btn btn-xl btn-danger">Leave the room</button> -->
+        <div class="col-lg-3 col-md-12" style="text-align: center;">
+            <!-- <div class="form-group login-submit"> -->
+            <div id="chatBox" style="height:632px;background-color: #2c2c2c; border-radius: 2px">
             </div>
-          </div>
+            </br>
+            <form name="form" ng-submit="sendMessage()" novalidate>
+              <div class="form-group">
+                <input type="text" id="chatInput" ng-model="message" class="form-control" placeholder="Chattez en direct" style="color:#e2e2e2;background-color: #2c2c2c; border-color: #2c2c2c">
+              </div>
+            </form>
         </div>
       </div>
-    </div>
+    <!-- </div> -->
   </div>
 </div>
 

@@ -54,6 +54,20 @@ module.exports.default = function(io) {
     if(data.action === 'down') player.pressingDown = data.state;
   })
 
+  client.on('sendMessage',function(message){
+    for(var i in clientsList){
+      clientsList[i].emit('newMessage', client.id.slice(0,6) + ' : ' + message)
+    }
+  })
+
+  client.on('evalValue',function(message){
+    try {
+      client.emit('evalReturn', eval(message))
+    } catch (e) {
+      client.emit('evalReturn', 'Error no such item : '+ message)
+    }
+  })
+
   client.on('disconnect',function(){
     console.log('deco')
     console.log(client.id)

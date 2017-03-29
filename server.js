@@ -35,5 +35,5 @@ db.sequelize.sync()
   });
 })
 .catch(function(error){
-  console.log('error message :', error.message, '\nCheck the database informations')
+  console.log('error message :', error.message, '\nCheck if Ampps is started or the database informations')
 })

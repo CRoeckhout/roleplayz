@@ -9,6 +9,8 @@ angular.module('rpgApp').controller('RoomController', function ($scope, mySocket
 
 	var canvasElem = document.getElementById("cnv");
 	var canvas = document.getElementById("cnv").getContext("2d");
+	var chatBox = document.getElementById("chatBox");
+	var chatInput = document.getElementById("chatInput");
 
 	canvasElem.width = 945;
 	canvasElem.height = 630;
@@ -17,14 +19,32 @@ angular.module('rpgApp').controller('RoomController', function ($scope, mySocket
 	canvas.font = "30px Arial";
 
 	vm.joinRoom = function (){
-		console.log('Trying to join')
-		mySocket.emit('newPlayerJoinning')
+		console.log('Trying to join');
+		mySocket.emit('newPlayerJoinning');
 	}
 
 	vm.leaveRoom = function (){
-		console.log('Trying to leave')
-		mySocket.emit('PlayerLeaving', vm.player)
+		console.log('Trying to leave');
+		mySocket.emit('PlayerLeaving', vm.player);
 	}
+
+	vm.sendMessage = function (){
+		if(chatInput.value.startsWith('/')){
+			mySocket.emit('evalValue', chatInput.value.slice(1));
+		}
+		else {
+			mySocket.emit('sendMessage', chatInput.value);
+		}
+		chatInput.value = '';
+	}
+
+	mySocket.on('newMessage', function(data){
+		chatBox.innerHTML += '<div>' + data +'</div>';
+	})
+
+	mySocket.on('evalReturn', function(data){
+		console.log(data)
+	})
 
 	mySocket.on('newPlayerJoinned', function(data){
 		vm.isConnected = true;
