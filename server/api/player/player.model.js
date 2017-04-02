@@ -1,6 +1,5 @@
 'use strict';
 
-
 module.exports = function (Sequelize, sequelize) {
   return sequelize.define('player', {
     _id: {
@@ -14,5 +13,5 @@ module.exports = function (Sequelize, sequelize) {
     image: Sequelize.STRING,
     info: Sequelize.STRING,
     active: Sequelize.BOOLEAN
-  });
+  })
 }
