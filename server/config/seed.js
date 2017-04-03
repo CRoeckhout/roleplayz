@@ -40,7 +40,7 @@ Promise.each([
       _id: "097b1ccc-e3f7-4b29-8eb2-9380e8eb050b",
       email: "Thilun003@gmail.com",
       username: "Thilun",
-      password: crypto.createHash('sha1').update(crypto.createHash('md5').update("kad").digest("hex")).digest("hex"),
+      password: 'kad',
     }])
     .then(() => {
       console.log('finished populating users');

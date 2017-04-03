@@ -2,12 +2,13 @@
 
 var express = require('express');
 var controller = require('./user.controller');
+var auth = require('../../auth/auth.service.js');
 
 var router = express.Router();
 
-router.get('/', controller.index);
-router.post('/me', controller.show);
-router.post('/', controller.create);
+router.get('/', auth.isAuthenticated(), controller.index);
+router.get('/me', auth.isAuthenticated(), controller.me);
+router.post('/', auth.hasRole('admin'), controller.create);
 /*router.put('/:id', controller.update);
 router.patch('/:id', controller.update);
 router.delete('/:id', controller.destroy);*/

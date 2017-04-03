@@ -11,15 +11,13 @@ module.exports.default = function(app) {
   app.use('/api/users', require('./api/user'));
 
   app.use('/auth', require('./auth'));
-
-  // app.use('/auth', require('./auth').default);
-
+  
   app.use('/public', express.static('public'));
 
   // All undefined asset or api routes should return a 404
   app.route('/:url(api|auth|components|app|bower_components|assets|public)/*')
    .get((req,res) =>{
-      res.send('error')
+      res.send('Cette route n\'existe pas.')
    });
 
   // All other routes should redirect to the index.html

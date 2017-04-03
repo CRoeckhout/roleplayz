@@ -1,6 +1,6 @@
 'use strict';
 
-var rpgApp = angular.module("rpgApp", ['ui.router', 'btford.socket-io'])
+var rpgApp = angular.module("rpgApp", ['ui.router', 'btford.socket-io', 'ngCookies'])
 
 rpgApp.config(function($urlRouterProvider, $stateProvider, $locationProvider) {
   $stateProvider
@@ -49,7 +49,9 @@ rpgApp.config(function($urlRouterProvider, $stateProvider, $locationProvider) {
 
   return self
 })
-.factory('Auth',function($http){
+
+
+.factory('Auth',function($http, $cookies){
   self = {
     active : true,
 
@@ -57,14 +59,15 @@ rpgApp.config(function($urlRouterProvider, $stateProvider, $locationProvider) {
         email,
         password
       }, callback) {
-        return $http.post('/api/users/me', {
+        return $http.post('/auth/local', {
             email: email,
             password: password
           })
           .then(res => {
-            return res.data
-            /*$cookies.put('token', res.data.token);
-            currentUser = User.get();
+            $cookies.put('token', res.data.token);
+            console.log(res.data.token)
+            return
+            /*currentUser = User.get();
             return currentUser.$promise;*/
           })
           /*.then(user => {

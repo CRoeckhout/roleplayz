@@ -19,6 +19,7 @@
     "angular-bootstrap": "^2.5.0",
     "lodash": "^4.17.4",
     "angular-ui-router": "0.3.2",
-    "angular-socket-io": "^0.7.0"
+    "angular-socket-io": "^0.7.0",
+    "angular-cookies": "^1.6.4"
   }
 }

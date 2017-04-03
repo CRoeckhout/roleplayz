@@ -79,6 +79,26 @@ module.exports = function (Sequelize, sequelize) {
       }
     },
     instanceMethods : {
+      authenticate: function(password, callback) {
+        if (!callback) {
+          return this.password === this.encryptPassword(password);
+        }
+
+        var _this = this;
+        this.encryptPassword(password, function(err, pwdGen) {
+          if (err) {
+            callback(err);
+          }
+
+          if (_this.password === pwdGen) {
+            callback(null, true);
+          }
+          else {
+            callback(null, false);
+          }
+        });
+      },
+      
       makeSalt : function(byteSize, callback) {
         var defaultByteSize = 16;
 
