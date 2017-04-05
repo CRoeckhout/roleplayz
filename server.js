@@ -24,7 +24,8 @@ require('./server/routes').default(app);
 
 // Syncing database && then start the server =========
 
-process.env.seedDB ? require('./server/config/seed.js') : console.log('No seeding');
+// process.env.seedDB ? require('./server/config/seed.js') : console.log('No seeding');
+require('./server/config/seed.js')
 
 db.sequelize.sync()
 .then(function(){

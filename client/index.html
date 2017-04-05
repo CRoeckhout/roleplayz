@@ -3,13 +3,14 @@
 		<!-- <link rel="stylesheet" href="assets/css/bootstrap.min.css"> -->
     <title>RPG Modular</title>
     <base href="/">
+  	<link rel="stylesheet" href="assets/css/animate.css">
     <link rel="stylesheet" href="assets/css/style.css">
     <link rel="stylesheet" href="assets/css/customize.css">
 	</head>
 	<body ng-app="rpgApp">
     <div class="be-wrapper">
       <navbar></navbar>
-      <div ui-view=""></div>
+      <div ui-view></div>
     </div>
 
 	  <script src="bower_components/angular/angular.min.js"></script>
@@ -17,12 +18,16 @@
 	  <script src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
 	  <script src="bower_components/angular-socket-io/socket.js"></script>
     <script src="bower_components/angular-cookies/angular-cookies.js"></script>
+    <script src="bower_components/angular-resource/angular-resource.js"></script>
+    <script src="bower_components/angular-animate/angular-animate.js"></script>
 	  <script src="bower_components/lodash/dist/lodash.min.js"></script>
 	  <script src="assets/js/socketio.js"></script>
 		<script src="app/app.js"></script>
+		<script src="app/main/main.controller.js"></script>
 		<script src="app/room/room.controller.js"></script>
 		<script src="app/account/login/login.controller.js"></script>
 		<script src="app/account/signup/signup.controller.js"></script>
+		<script src="app/account/settings/settings.controller.js"></script>
 		<script src="components/navbar/navbar.controller.js"></script>
 		<script src="components/navbar/navbar.directive.js"></script>
 	</body>

@@ -17,14 +17,24 @@ module.exports = function (Sequelize, sequelize) {
     email: {
       type: Sequelize.STRING,
       unique: {
-        msg: 'The specified email address is already in use.'
+        msg: "L'adresse E-mail est déja utilisée"
       },
       validate: {
         isEmail: true
       }
     },
-    username: Sequelize.STRING,
-    password: Sequelize.STRING,
+    username: {
+      type: Sequelize.STRING,
+      unique: {
+        msg: "Le nom d'utilisateur est déja utilisé"
+      },
+      validate: {
+        len: {
+          args :[3,16],
+          msg: "Le nom d'utilistateur doit contenir entre 3 à 16 caractéres"
+        },
+      }
+    },
     active: Sequelize.BOOLEAN,
     role: {
       type: Sequelize.STRING,

@@ -37,6 +37,12 @@ Promise.each([
   .then(() => User.destroy({ where: {} }))
   .then(() => {
     return User.bulkCreate([{
+      _id: "197b1ccc-e3f7-4b29-8eb2-9380e8eb050b",
+      email: "admin@example.com",
+      username: "Administrateur",
+      password: 'admin',
+      role: 'admin',
+    },{
       _id: "097b1ccc-e3f7-4b29-8eb2-9380e8eb050b",
       email: "Thilun003@gmail.com",
       username: "Thilun",
