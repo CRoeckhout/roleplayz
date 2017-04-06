@@ -1,7 +1,23 @@
 'use strict';
 
-angular.module('rpgApp').controller('SettingsController', function ($rootScope, $scope, $state, Auth, Upload) {
+angular.module('rpgApp').controller('SettingsController', function ($rootScope, $scope, $state, $http, Auth, Upload) {
 	var vm = $scope
+	vm.picFile = ''
+
+	var user = Auth.getCurrentUser()
+	console.log(user)
+
+	setTimeout(function(){
+		$http({
+		    url: $rootScope.config.baseUrl + user.profilePicture,
+		    method: "GET",
+		    responseType: "blob"
+
+		}).then(function(res){
+			vm.picFile = res.data
+		})
+
+	},500)
 
 	vm.uploadPic = function(file, categorie) {
 		file.upload = Upload.upload({

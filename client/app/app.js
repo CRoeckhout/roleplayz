@@ -116,6 +116,7 @@ rpgApp.config(function($urlRouterProvider, $stateProvider, $locationProvider, $h
   };
 })
 
+
 .factory('Auth',function($http, $cookies, $location, $q, User){
   var currentUser = {};
   var userRoles = ["user","admin"];

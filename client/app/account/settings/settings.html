@@ -1,77 +1,3 @@
-<!-- <div class="container">
-  <div class="row">
-    <div class="col-sm-12">
-      <div class="form-group">
-        <label class="btn btn-default btn-file">
-          Changer d'image <form encType="multipart/form-data"><input type="file" ngf-select ng-model="vm.picFile" name="image" accept="image/*" ngf-max-size="2MB" required ngf-model-invalid="errorFile" style="display: none;"></form> 
-        </label>
-      </div>
-      <div class="form-group">
-        <form id="my-awesome-dropzone" encType="application/json" action="assets/lib/dropzone/upload.php" class="dropzone" style="padding:0px 0px 0px 0px">
-          <div style="width:200px; height:200px;">
-            <img id="uploadPicture" style="width:20%; max-width:200px; max-height:200px" ng-show="myForm.file.$valid" ngf-thumbnail="vm.picFile" class="thumb">
-          </div>
-        </form>
-        <br>
-          <div class="progress" ng-show="vm.picFile.progress >= 0">
-            <div style="width:{{vm.picFile.progress}}%;" class="progress-bar progress-bar-striped active" ng-class="{'progress-bar-success' : vm.picFile.result, 'progress-bar-primary' : !vm.picFile.result}">
-            <span ng-hide="vm.picFile.result">{{vm.picFile.progress + '%'}}</span>
-            <span ng-show="vm.picFile.result">Terminé</span></div>
-          </div>
-        <span class="err" ng-show="errorMsg">{{errorMsg}}</span>
-      </div>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-sm-12">
-      <h1>Change Password</h1>
-    </div>
-    <div class="col-sm-12">
-      <form class="form" name="form" ng-submit="vm.changePassword(form)" novalidate>
-
-        <div class="form-group">
-          <label>Current Password</label>
-
-          <input type="password" name="password" class="form-control" ng-model="vm.user.oldPassword"
-                 mongoose-error/>
-          <p class="help-block" ng-show="form.password.$error.mongoose">
-              {{ vm.errors.other }}
-          </p>
-        </div>
-
-        <div class="form-group">
-          <label>New Password</label>
-
-          <input type="password" name="newPassword" class="form-control" ng-model="vm.user.newPassword"
-                 ng-minlength="3"
-                 required/>
-          <p class="help-block"
-             ng-show="(form.newPassword.$error.minlength || form.newPassword.$error.required) && (form.newPassword.$dirty || vm.submitted)">
-            Password must be at least 3 characters.
-          </p>
-        </div>
-
-        <div class="form-group">
-          <label>Confirm New Password</label>
-
-          <input type="password" name="confirmPassword" class="form-control" ng-model="vm.user.confirmPassword"
-                 match="vm.user.newPassword"
-                 ng-minlength="3"
-                 required=""/>
-          <p class="help-block"
-             ng-show="form.confirmPassword.$error.match && vm.submitted">
-            Passwords must match.
-          </p>
-
-        </div>
-
-        <p class="help-block"> {{ vm.message }} </p>
-
-        <button class="btn btn-lg btn-primary" type="submit">Save changes</button>
-      </form>
-    </div>
-  </div>
-</div> -->
 <div class="be-content">
   <div class="main-content container-fluid">
     <div class="row">
@@ -85,7 +11,7 @@
           <div class="form-group">
             <form id="my-awesome-dropzone" encType="application/json" action="assets/lib/dropzone/upload.php" class="dropzone" style="padding:0px 0px 0px 0px; margin-left:20px; margin-right:20px">
               <div style="width:100%; height:200px;">
-                <img id="uploadPicture" style="width:100%; height:100%;" ng-show="myForm.file.$valid" ngf-thumbnail="picFile" class="thumb">
+                <img id="uploadPicture" style="width:100%; height:100%;" ng-show="myForm.file.$valid" ngf-thumbnail="picFile" class="thumb"> 
               </div>
             </form>
             <br>

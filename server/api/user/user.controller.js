@@ -28,7 +28,7 @@ function index(req, res) {
 
 function me(req, res, next) {
   var userId = req.user._id;
-  return User.find({ where: {_id: userId}, attributes: ['_id','email','role'] })
+  return User.find({ where: {_id: userId}, attributes: ['_id','email','role','profilePicture'] })
   .then(user => { // don't ever give out the password or salt
     if (!user) {
       return res.status(401).end();

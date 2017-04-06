@@ -40,6 +40,10 @@ module.exports = function (Sequelize, sequelize) {
       type: Sequelize.STRING,
       defaultValue: 'user'
     },
+    profilePicture: {
+      type: Sequelize.STRING,
+      defaultValue: '/public/uploads/profilePictures/default.jpg'
+    },
     password: {
       type: Sequelize.STRING,
       validate: {
@@ -52,7 +56,8 @@ module.exports = function (Sequelize, sequelize) {
       profile: function() {
         return {
           'name': this.name,
-          'role': this.role
+          'role': this.role,
+          'profilePicture': this.profilePicture
         };
       },
 
