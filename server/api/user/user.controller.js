@@ -2,6 +2,7 @@
 var User = require('../../config/database.js').User;
 var config = require('../../config/environment');
 var crypto = require('crypto');
+var path = require('path');
 var jwt = require('jsonwebtoken');
 
 function validationError(res, statusCode) {
@@ -50,8 +51,36 @@ function create(req, res) {
     .catch(validationError(res));
 }
 
+function uploadImage(req, res) {
+  var userId = req.user._id;
+  return User.find({ where: {_id: userId}, attributes: ['_id','email','role'] })
+  .then(user => {
+    var image;
+    console.log(req.files)
+    if (!req.files) {
+      res.send('No files were uploaded.');
+      return;
+    }
+
+    image = req.files.file;
+    var fileName = user._id;
+    image.mv(path.normalize(__dirname + '/../../../public/uploads/'+fileName+'.png'), function(err) {
+      if (err) {
+        res.status(500).send(err);
+      }
+      else {
+      res.json({
+        url: '/uploads/'+fileName+'.png'
+      });
+      }
+    });
+  })
+  .catch(function(err){console.log(err)});
+}
+
 module.exports = {
   index : index,
   me : me,
-  create : create
+  create : create,
+  uploadImage : uploadImage
 }

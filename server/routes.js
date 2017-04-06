@@ -2,11 +2,11 @@
 
 var path = require('path');
 var express = require('express');
-// var fileUpload = require('express-fileupload');
+var fileUpload = require('express-fileupload');
 
 module.exports.default = function(app) {
 
-  // app.use(fileUpload());
+  app.use(fileUpload());
   app.use('/api/players', require('./api/player'));
   app.use('/api/users', require('./api/user'));
 

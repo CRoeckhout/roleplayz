@@ -1,6 +1,6 @@
 'use strict';
 
-var rpgApp = angular.module("rpgApp", ['ui.bootstrap' ,'ui.router', 'btford.socket-io', 'ngCookies', 'ngResource', 'ngAnimate'])
+var rpgApp = angular.module("rpgApp", ['ui.bootstrap' ,'ui.router', 'btford.socket-io', 'ngCookies', 'ngResource', 'ngAnimate', 'ngFileUpload'])
 
 rpgApp.config(function($urlRouterProvider, $stateProvider, $locationProvider, $httpProvider) {
   $stateProvider
@@ -44,6 +44,7 @@ rpgApp.config(function($urlRouterProvider, $stateProvider, $locationProvider, $h
     templateUrl: '/app/room/room.html',
     controller: 'RoomController',
     controllerAs: 'vm',
+    authenticate : true
   });
   $urlRouterProvider.otherwise('/');
   $locationProvider.html5Mode(true);
@@ -115,7 +116,6 @@ rpgApp.config(function($urlRouterProvider, $stateProvider, $locationProvider, $h
   };
 })
 
-
 .factory('Auth',function($http, $cookies, $location, $q, User){
   var currentUser = {};
   var userRoles = ["user","admin"];
@@ -177,9 +177,6 @@ rpgApp.config(function($urlRouterProvider, $stateProvider, $locationProvider, $h
 
     hasRole(role, callback) {
       var hasRole = function(r, h) {
-        console.log(r,h)
-        console.log(userRoles.indexOf(r), userRoles.indexOf(h))
-        console.log(userRoles.indexOf(r) >= userRoles.indexOf(h))
         return userRoles.indexOf(r) >= userRoles.indexOf(h);
       };
 
@@ -210,8 +207,11 @@ rpgApp.config(function($urlRouterProvider, $stateProvider, $locationProvider, $h
   return Auth
 })
 
-
 .run(function ($rootScope, $state, Auth) {
+  $rootScope.config = {
+    baseUrl : "http://localhost:9002"
+  }
+
   $rootScope.$on('$stateChangeStart', function(event, next) {
     if(next.name === "login" || next.name === "signup"){
       return Auth.isLoggedIn(_.noop)

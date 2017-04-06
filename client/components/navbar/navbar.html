@@ -6,6 +6,7 @@
       <ul class="nav navbar-nav navbar-right be-user-nav">
         <li class="custom" ng-if="Auth.isLoggedIn()"><a href="/room" role="button" aria-expanded="false">SALONS</a></li>
         <li class="custom" ng-if="!Auth.isLoggedIn()"><a href="/login" role="button" aria-expanded="false">CONNEXION</a></li>
+        <li class="custom" ng-if="Auth.isLoggedIn()"><a href="/profile" role="button" aria-expanded="false">PROFIL</a></li>
         <li class="custom" ng-if="Auth.isLoggedIn()"><a href="/logout" role="button" aria-expanded="false">DECONNECTER</a></li>
       </ul>
     </div>

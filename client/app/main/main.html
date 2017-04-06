@@ -1,7 +1,7 @@
 <div class="be-content" style="padding-top:80px">   
   <div class="main-content container-fluid" style="padding: 0px">
 
-  <div style="height: 200px; max-height: 200px; overflow: hidden;">
+  <div style="height: 200px; max-height: 200px; overflow: hidden;box-shadow: inset -1px -1px 72px 3px rgba(0,0,0,0.75);">
     <div uib-carousel active="active" interval="myInterval" no-wrap="noWrapSlides">
       <div uib-slide ng-repeat="slide in slides track by slide.id" index="slide.id">
         <img ng-src="{{slide.image}}" style="width: 100%;" ng-style="{{slide.style}}">

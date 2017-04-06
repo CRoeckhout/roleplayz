@@ -9,6 +9,7 @@ var router = express.Router();
 router.get('/', auth.isAuthenticated(), controller.index);
 router.get('/me', auth.isAuthenticated(), controller.me);
 router.post('/', controller.create);
+router.post('/uploadImage', auth.isAuthenticated(), controller.uploadImage);
 /*router.put('/:id', controller.update);
 router.patch('/:id', controller.update);
 router.delete('/:id', controller.destroy);*/
