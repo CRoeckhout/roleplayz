@@ -11,7 +11,7 @@ angular.module('rpgApp').controller('SignupController', function ($scope, $state
 	      password: vm.user.password
 	    })
 	    .then(() => {
-	      $state.go('main');
+	      $state.go('profile');
 	    })
 	    .catch(err => {
 	      err = err.data;

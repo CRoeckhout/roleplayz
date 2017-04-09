@@ -8,6 +8,7 @@ module.exports.default = function(app) {
 
   app.use(fileUpload());
   app.use('/api/players', require('./api/player'));
+  app.use('/api/rooms', require('./api/room'));
   app.use('/api/users', require('./api/user'));
 
   app.use('/auth', require('./auth'));

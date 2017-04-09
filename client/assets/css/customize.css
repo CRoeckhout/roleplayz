@@ -2,7 +2,7 @@
   --elem-color: #B84430;
   --elem-color-darker: #B84430;
   --elem-body-color: #0a0a0a;
-  --elem-body-color-medium: #3d3d3d;
+  --elem-body-color-medium: #303030;
   --elem-body-color-darker: #383838;
   --text-color: #efefef;
   --text-color-darker: #e2e2e2;
@@ -26,6 +26,11 @@
   .be-content {
     margin-left: 0px;
     padding-top:111px;
+  }
+
+  .not-full {
+    margin-left: 220px;
+    margin-right: 220px;
   }
 
   .be-top-header {
@@ -141,19 +146,19 @@
 
   /* Table */
   .table-striped > tbody > tr:nth-of-type(odd) {
-    background-color: var(--elem-body-color-darker);
+    background-color: #252525;
   }
 
   .table-striped > tbody > tr:nth-of-type(even) {
-    background-color: var(--elem-body-color);
+    background-color: #252525;
   }
 
   .table-striped > tbody > tr:nth-of-type(odd):hover {
-    background-color: var(--elem-body-color-medium);
+    background-color: #3a3939;
   }
 
   .table-striped > tbody > tr:nth-of-type(even):hover {
-    background-color: var(--elem-body-color-medium);
+    background-color: #3a3939;
   }
 
   /* Hover Transition */
@@ -184,6 +189,17 @@
   .subTable > td {
     padding-top: 6px !important;
     padding-bottom: 6px !important;
+  }
+
+  .center {
+    text-align: center;
+  }
+
+  .right {
+    text-align: right;
+  }
+  .left {
+    text-align: left;
   }
 
 #chatBox {

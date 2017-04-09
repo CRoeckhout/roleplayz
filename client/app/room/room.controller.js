@@ -1,8 +1,8 @@
 'use strict';
 
 
-angular.module('rpgApp').controller('RoomController', function ($scope, mySocket, Controls) {
-	console.log('room')
+angular.module('rpgApp').controller('RoomController', function ($scope, $stateParams, mySocket, Controls) {
+  console.log($stateParams);
 	var vm = $scope
 	vm.isConnected = false;
 	vm.player = {}

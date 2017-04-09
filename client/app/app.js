@@ -40,9 +40,19 @@ rpgApp.config(function($urlRouterProvider, $stateProvider, $locationProvider, $h
     authenticate : true
   })
   .state('room', {
-    url: '/room',
+    url: '/room/:roomId',
     templateUrl: '/app/room/room.html',
+    params: {
+        roomId: null
+    },
     controller: 'RoomController',
+    controllerAs: 'vm',
+    authenticate : true
+  })
+  .state('rooms', {
+    url: '/rooms',
+    templateUrl: '/app/rooms/rooms.html',
+    controller: 'RoomsController',
     controllerAs: 'vm',
     authenticate : true
   });

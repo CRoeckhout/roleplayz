@@ -1,0 +1,33 @@
+<ul ng-if="chunks.length" class="pagination" style="-moz-user-select: none; -webkit-user-select: none; -ms-user-select:none; user-select:none;-o-user-select:none;">
+  <li ng-class="{disabled:currentPage === 0}">
+      <a ng-click="setPage(0)" style="cursor:pointer">Debut</a>
+  </li>
+  <li ng-class="{disabled:currentPage === 0}">
+      <a ng-click="setPage(currentPage - 1)" style="cursor:pointer">Précedent</a>
+  </li>  
+  <li ng-repeat="page in page" ng-class="{active:currentPage === page}">
+      <a ng-click="setPage(page)" style="cursor:pointer">{{page + 1}}</a>
+  </li>           
+  <li ng-class="{disabled:currentPage === totalPages -1}">
+      <a ng-click="setPage(currentPage + 1)" style="cursor:pointer">Suivant</a>
+  </li>
+  <li ng-class="{disabled:currentPage === totalPages -1}">
+      <a ng-click="setPage(totalPages -1)" style="cursor:pointer">Fin</a>
+  </li>
+</ul>
+
+<style type="text/css">
+  .pagination > li > a:hover {
+    color: #B84430;
+  }
+  
+  .pagination > .active a {
+    background-color: #B84430;
+    border-color: #9e3a29;
+  }
+
+  .pagination > .active a:hover {
+    background-color: #9e3a29;
+    border-color: #9e3a29;
+  }
+</style>

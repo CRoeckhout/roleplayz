@@ -7,7 +7,7 @@ angular.module('rpgApp').controller('LoginController', function ($scope, $state,
 		console.log(vm.user.email, vm.user.password)
 		Auth.login({email :vm.user.email, password:vm.user.password})
 		.then(function(resp){
-			if(!resp.error) $state.go('room');
+			if(!resp.error) $state.go('rooms');
 			else vm.error = resp
 		})
   }
