@@ -1,11 +1,10 @@
 'use strict';
 
-angular.module('rpgApp').controller('SettingsController', function ($rootScope, $scope, $state, $http, Auth, Upload) {
+angular.module('rpgApp').controller('SettingsController', function ($rootScope, $scope, $state, $http, Auth, Upload, User) {
 	var vm = $scope
 	vm.picFile = ''
 
 	vm.user = Auth.getCurrentUser()
-	console.log(vm.user)
 
 	setTimeout(function(){
 		$http({
@@ -38,5 +37,10 @@ angular.module('rpgApp').controller('SettingsController', function ($rootScope, 
 
 	vm.validateEdit = function(){
 		vm.uploadPic(vm.picFile, vm.data)
+		$http.put($rootScope.config.baseUrl + '/api/users',{}).then(function(){
+			Auth.setCurrentUser(User.get())
+		}).catch(function(err){
+			console.log(err)
+		})
 	}
 })

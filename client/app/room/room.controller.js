@@ -6,18 +6,8 @@ angular.module('rpgApp').controller('RoomController', function ($scope, $statePa
 	vm.isConnected = false;
 	vm.player = {}
 	vm.isFocused = true;
-/*	var mySocket = {}
-	function initSocket(){
-		return new Promise(function(resolve, reject){
-			var mySocket = 
-			return resolve(Socket())
-		})
-	}
 
-	initSocket().then(function(socket){
-		console.log(socket)
-	})
-*/
+	mySocket.connect()
 	var canvasElem = document.getElementById("cnv");
 	var canvas = document.getElementById("cnv").getContext("2d");
 	var chatBox = document.getElementById("chatBox");
@@ -30,7 +20,7 @@ angular.module('rpgApp').controller('RoomController', function ($scope, $statePa
 
 	mySocket.emit('sendUserInformation', Auth.getCurrentUser())
 
-	mySocket.on('newClientJoinned', function(clientList){
+	mySocket.on('newClientInformations', function(clientList){
 		console.log(clientList)
 		vm.clientsList = clientList
 	})
@@ -49,14 +39,14 @@ angular.module('rpgApp').controller('RoomController', function ($scope, $statePa
 		if(chatInput.value.startsWith('/')){
 			mySocket.emit('evalValue', chatInput.value.slice(1));
 		}
-		else {
+		else if (chatInput.value.trim().length != 0) {
 			mySocket.emit('sendMessage', chatInput.value);
+			chatInput.value = '';
 		}
-		chatInput.value = '';
 	}
 
 	mySocket.on('newMessage', function(data){
-		chatBox.innerHTML += '<div>' + data +'</div>';
+		chatBox.innerHTML += '<div class="chatMessage">' + data +'</div>';
 	})
 
 	mySocket.on('evalReturn', function(data){
@@ -85,8 +75,9 @@ angular.module('rpgApp').controller('RoomController', function ($scope, $statePa
 
 	mySocket.on('newPositions',function(data){
 		canvas.clearRect(0,0,945,630)
+		console.log(data)
 		for(var i = 0; i < data.length; i++) {
-			canvas.fillText(data[i].id.slice(0,6), data[i].x - 30, data[i].y - 10);
+			canvas.fillText(data[i].user.username, data[i].x - 30, data[i].y - 10);
 			canvas.fillRect(data[i].x, data[i].y, 40, 40);
 /*			player.update();
 	  	player.render();*/

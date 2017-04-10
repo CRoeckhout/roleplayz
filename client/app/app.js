@@ -190,6 +190,11 @@ rpgApp.config(function($urlRouterProvider, $stateProvider, $locationProvider, $h
       });
     },
 
+    setCurrentUser(newUser) {
+      currentUser = newUser
+      return currentUser;
+    },
+
     hasRole(role, callback) {
       var hasRole = function(r, h) {
         return userRoles.indexOf(r) >= userRoles.indexOf(h);
@@ -222,12 +227,16 @@ rpgApp.config(function($urlRouterProvider, $stateProvider, $locationProvider, $h
   return Auth
 })
 
-.run(function ($rootScope, $state, Auth) {
+.run(function ($rootScope, $state, Auth, mySocket) {
   $rootScope.config = {
     baseUrl : "http://localhost:9002"
   }
 
   $rootScope.$on('$stateChangeStart', function(event, next) {
+    if(next.name !== 'room'){
+      mySocket.disconnect()
+    }
+    
     if(next.name === "login" || next.name === "signup"){
       return Auth.isLoggedIn(_.noop)
       .then(is => {
@@ -241,14 +250,6 @@ rpgApp.config(function($urlRouterProvider, $stateProvider, $locationProvider, $h
     if (!next.authenticate) {
       return;
     }
-    //DECONNECTER LE SOCKET
-    setTimeout(function(){
-      if($state.current.name == "room"){
-        console.log('oui')
-      }
-    },0)
-    //DECONNECTER LE SOCKET
-    console.log(next)
 
     if (typeof next.authenticate === 'string') {
       Auth.hasRole(next.authenticate, _.noop)

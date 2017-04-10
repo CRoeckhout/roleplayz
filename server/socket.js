@@ -45,12 +45,13 @@ module.exports.default = function(io) {
         clientList.push(clientsList[i].User)
       }
       for(var i in clientsList){
-        clientsList[i].emit('newClientJoinned', clientList);
+        clientsList[i].emit('newClientInformations', clientList);
       }
     });
 
     client.on('newPlayerJoinning', function (data) {
       player = Player(client.id)
+      player.User = client.User
       playersList[client.id] = player;
       client.emit('newPlayerJoinned', player);
     });
@@ -80,7 +81,7 @@ module.exports.default = function(io) {
 
     client.on('sendMessage',function(message){
       for(var i in clientsList){
-        clientsList[i].emit('newMessage', client.id.slice(0,6) + ' : ' + message)
+        clientsList[i].emit('newMessage','<b>' + client.User.username + '</b> : ' + message)
       }
     })
 
@@ -96,6 +97,13 @@ module.exports.default = function(io) {
       console.log('deco')
       delete clientsList[client.id];
       delete playersList[client.id];
+      var clientList = []
+      for(var i in clientsList){
+        clientList.push(clientsList[i].User)
+      }
+      for(var i in clientsList){
+        clientsList[i].emit('newClientInformations', clientList);
+      }
     })
 
   });
@@ -106,7 +114,7 @@ setInterval(function(){
   for(var i in playersList){
     var player = playersList[i]
     player.updatePosition()
-    pack.push({id:player.id,x:player.x, y:player.y})
+    pack.push({id:player.id,x:player.x, y:player.y, user:player.User})
   }
 
   for(var i in clientsList){

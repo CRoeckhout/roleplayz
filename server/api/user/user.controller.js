@@ -1,13 +1,16 @@
 'use strict';
 var User = require('../../config/database.js').User;
 var config = require('../../config/environment');
+var signToken = require('../../auth/auth.service.js').signToken;
 var crypto = require('crypto');
+var _ = require('lodash');
 var path = require('path');
 var jwt = require('jsonwebtoken');
 
 function validationError(res, statusCode) {
   statusCode = statusCode || 422;
   return function(err) {
+    console.log(err)
     res.status(statusCode).json(err);
   }
 }
@@ -51,12 +54,32 @@ function create(req, res) {
     .catch(validationError(res));
 }
 
+function updateUser(req, res, next) {
+  var userId = req.user._id;
+  var updatable = _.pick(req.body, ["email","username"])
+  console.log(userId)
+  console.log(updatable)
+
+  return User.find({
+    where: {
+      _id: userId
+    }, attributes: ['_id','email','role','profilePicture']
+  })
+    .then(user => {
+      console.log(user)
+      return user.update(updatable)
+        .then(() => {
+          res.json('updated');
+        })
+        .catch(validationError(res));
+    });
+}
+
 function uploadImage(req, res) {
   var userId = req.user._id;
-  return User.find({ where: {_id: userId}, attributes: ['_id','email','role'] })
+  return User.find({ where: {_id: userId}, attributes: ['_id'] })
   .then(user => {
     var image;
-    console.log(req.files)
     if (!req.files) {
       res.send('No files were uploaded.');
       return;
@@ -83,5 +106,6 @@ module.exports = {
   index : index,
   me : me,
   create : create,
+  updateUser : updateUser,
   uploadImage : uploadImage
 }
