@@ -229,7 +229,7 @@ rpgApp.config(function($urlRouterProvider, $stateProvider, $locationProvider, $h
 
 .run(function ($rootScope, $state, Auth, mySocket) {
   $rootScope.config = {
-    baseUrl : "http://localhost:9002"
+    baseUrl : "http://roeckhout-corentin.eu:9002"
   }
 
   $rootScope.$on('$stateChangeStart', function(event, next) {
