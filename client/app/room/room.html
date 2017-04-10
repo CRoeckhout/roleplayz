@@ -4,9 +4,9 @@
       <div class="col-lg-2 col-md-12" style="text-align: center;">
         <div class="row" style="margin-right: 0;">
           <div id="clientsList" style="height:632px;background-color: #2c2c2c; border-radius: 2px; overflow-y:auto; overflow-x: hidden;">
-            <div class="col-lg-12" ng-repeat="client in clientsList">
-              <div class="col-lg-3 center">
-                <span class="imgHolder"><img class="profileThumb" src="{{client.profilePicture}}"></span>
+            <div class="col-lg-12" ng-repeat="client in clientsList" style="padding-left: 0px; padding-top: 10px">
+              <div class="col-lg-3 imgHolder">
+                <img class="profileThumb" src="{{client.profilePicture}}">
               </div>
               <div class="col-lg-9 left">
                 <h3>{{client.username}}</h3>
@@ -57,8 +57,9 @@
 
   .imgHolder {
     display: inline-block;
-    height: 10%;
     vertical-align: middle;
+    padding-left: 0px;
+    padding-right: 0px;
   }
 
   .chatMessage {

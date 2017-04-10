@@ -233,7 +233,7 @@ rpgApp.config(function($urlRouterProvider, $stateProvider, $locationProvider, $h
   }
 
   $rootScope.$on('$stateChangeStart', function(event, next) {
-    if(next.name !== 'room'){
+    if(next.name != 'room'){
       mySocket.disconnect()
     }
     
