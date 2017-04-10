@@ -63,7 +63,7 @@ var player = sprite({
 
 canvas.font = "30px Arial";
 
-var socket = io({transports: ['websocket'], upgrade: false});
+// var socket = io({transports: ['websocket'], upgrade: false});
 
 /*function tryToJoin(){
 	console.log('trying to join')

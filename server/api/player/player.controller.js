@@ -16,16 +16,12 @@ function index(req, res) {
 }
 
 function show(req, res) {
-  console.log(req.params.id)
   return Player.find({where : {_id : req.params.id}}).then(function(players){
       res.json(players)
     })
 }
 
 function create(req, res) {
-  console.log(req.body)
-  console.log(req.params)
-  console.log(req.query)
   return Player.create({name : req.params.name})
   .then(respondWithResult(res))
 }

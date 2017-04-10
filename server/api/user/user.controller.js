@@ -28,8 +28,8 @@ function index(req, res) {
 
 function me(req, res, next) {
   var userId = req.user._id;
-  return User.find({ where: {_id: userId}, attributes: ['_id','email','role','profilePicture'] })
-  .then(user => { // don't ever give out the password or salt
+  return User.find({ where: {_id: userId}, attributes: ['_id','email','username','role','profilePicture'] })
+  .then(user => {
     if (!user) {
       return res.status(401).end();
     }
@@ -64,14 +64,15 @@ function uploadImage(req, res) {
 
     image = req.files.file;
     var fileName = user._id;
-    image.mv(path.normalize(__dirname + '/../../../public/uploads/'+fileName+'.png'), function(err) {
+    image.mv(path.normalize(__dirname + '/../../../public/uploads/profilePictures/'+fileName+'.png'), function(err) {
       if (err) {
         res.status(500).send(err);
       }
       else {
-      res.json({
-        url: '/uploads/'+fileName+'.png'
-      });
+      user.update({profilePicture:'/public/uploads/profilePictures/'+fileName+'.png'})
+      .then(function(){
+        res.json({url: '/uploads/'+fileName+'.png'});
+      })
       }
     });
   })

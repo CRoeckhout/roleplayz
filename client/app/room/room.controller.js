@@ -1,13 +1,23 @@
 'use strict';
 
 
-angular.module('rpgApp').controller('RoomController', function ($scope, $stateParams, mySocket, Controls) {
-  console.log($stateParams);
+angular.module('rpgApp').controller('RoomController', function ($scope, $stateParams, mySocket, Controls, Auth) {
 	var vm = $scope
 	vm.isConnected = false;
 	vm.player = {}
 	vm.isFocused = true;
+/*	var mySocket = {}
+	function initSocket(){
+		return new Promise(function(resolve, reject){
+			var mySocket = 
+			return resolve(Socket())
+		})
+	}
 
+	initSocket().then(function(socket){
+		console.log(socket)
+	})
+*/
 	var canvasElem = document.getElementById("cnv");
 	var canvas = document.getElementById("cnv").getContext("2d");
 	var chatBox = document.getElementById("chatBox");
@@ -17,6 +27,13 @@ angular.module('rpgApp').controller('RoomController', function ($scope, $statePa
 	canvasElem.height = 630;
 
 	canvas.font = "30px Arial";
+
+	mySocket.emit('sendUserInformation', Auth.getCurrentUser())
+
+	mySocket.on('newClientJoinned', function(clientList){
+		console.log(clientList)
+		vm.clientsList = clientList
+	})
 
 	vm.joinRoom = function (){
 		console.log('Trying to join');

@@ -4,12 +4,12 @@ angular.module('rpgApp').controller('SettingsController', function ($rootScope, 
 	var vm = $scope
 	vm.picFile = ''
 
-	var user = Auth.getCurrentUser()
-	console.log(user)
+	vm.user = Auth.getCurrentUser()
+	console.log(vm.user)
 
 	setTimeout(function(){
 		$http({
-		    url: $rootScope.config.baseUrl + user.profilePicture,
+		    url: $rootScope.config.baseUrl + vm.user.profilePicture,
 		    method: "GET",
 		    responseType: "blob"
 
@@ -17,7 +17,7 @@ angular.module('rpgApp').controller('SettingsController', function ($rootScope, 
 			vm.picFile = res.data
 		})
 
-	},500)
+	},100)
 
 	vm.uploadPic = function(file, categorie) {
 		file.upload = Upload.upload({

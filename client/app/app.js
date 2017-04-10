@@ -65,6 +65,10 @@ rpgApp.config(function($urlRouterProvider, $stateProvider, $locationProvider, $h
   return socketFactory();
 })
 
+/*.factory('Socket', function (socketFactory) {
+  return socketFactory;
+})*/
+
 .factory('Controls',function(){
   self = {
     active : false,
@@ -237,7 +241,14 @@ rpgApp.config(function($urlRouterProvider, $stateProvider, $locationProvider, $h
     if (!next.authenticate) {
       return;
     }
-
+    //DECONNECTER LE SOCKET
+    setTimeout(function(){
+      if($state.current.name == "room"){
+        console.log('oui')
+      }
+    },0)
+    //DECONNECTER LE SOCKET
+    console.log(next)
 
     if (typeof next.authenticate === 'string') {
       Auth.hasRole(next.authenticate, _.noop)

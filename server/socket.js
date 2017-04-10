@@ -33,58 +33,70 @@ function Player(id){
 
 module.exports.default = function(io) {
   io.on('connection', function (client) {
+    console.log('connection')
+    client.id = uuid.v4();
+    var player = {}
 
-  console.log('co')
-  client.id = uuid.v4();
-  clientsList[client.id] = client;
-  var player = {}
+    client.on('sendUserInformation', function (data) {
+      client.User = data
+      clientsList[client.id] = client;
+      var clientList = []
+      for(var i in clientsList){
+        clientList.push(clientsList[i].User)
+      }
+      for(var i in clientsList){
+        clientsList[i].emit('newClientJoinned', clientList);
+      }
+    });
 
-  client.on('newPlayerJoinning', function (data) {
-    console.log('player is joinning')
-    player = Player(client.id)
-    playersList[client.id] = player;
-    client.emit('newPlayerJoinned', player);
-  });
+    client.on('newPlayerJoinning', function (data) {
+      player = Player(client.id)
+      playersList[client.id] = player;
+      client.emit('newPlayerJoinned', player);
+    });
 
-  client.on('PlayerLeaving', function (data) {
+    client.on('PlayerLeaving', function (data) {
+        delete playersList[client.id];
+        client.emit('playerLeft', data.id);
+    });
+
+    client.on('keyPress', function(data){
+      if(playersList[client.id]){
+        if(data.action === 'left') playersList[client.id].actions.left = data.state;
+        if(data.action === 'right') playersList[client.id].actions.right = data.state;
+        if(data.action === 'up') playersList[client.id].actions.up = data.state;
+        if(data.action === 'down') playersList[client.id].actions.down = data.state;
+      }
+    })
+
+    client.on('chatInputFocused', function(data){
+      if(playersList[client.id]){
+        playersList[client.id].actions.left = false;
+        playersList[client.id].actions.right = false;
+        playersList[client.id].actions.up = false;
+        playersList[client.id].actions.down = false;
+      }
+    })
+
+    client.on('sendMessage',function(message){
+      for(var i in clientsList){
+        clientsList[i].emit('newMessage', client.id.slice(0,6) + ' : ' + message)
+      }
+    })
+
+    client.on('evalValue',function(message){
+      try {
+        client.emit('evalReturn', eval(message))
+      } catch (e) {
+        client.emit('evalReturn', 'Error no such item : '+ message)
+      }
+    })
+
+    client.on('disconnect',function(){
+      console.log('deco')
+      delete clientsList[client.id];
       delete playersList[client.id];
-      client.emit('playerLeft', data.id);
-  });
-
-  client.on('keyPress', function(data){
-    console.log(player.actions.left, player.actions.right, player.actions.up, player.actions.down)
-    if(data.action === 'left') player.actions.left = data.state;
-    if(data.action === 'right') player.actions.right = data.state;
-    if(data.action === 'up') player.actions.up = data.state;
-    if(data.action === 'down') player.actions.down = data.state;
-  })
-
-  client.on('chatInputFocused', function(data){
-    player.actions.left = false;
-    player.actions.right = false;
-    player.actions.up = false;
-    player.actions.down = false;
-  })
-
-  client.on('sendMessage',function(message){
-    for(var i in clientsList){
-      clientsList[i].emit('newMessage', client.id.slice(0,6) + ' : ' + message)
-    }
-  })
-
-  client.on('evalValue',function(message){
-    try {
-      client.emit('evalReturn', eval(message))
-    } catch (e) {
-      client.emit('evalReturn', 'Error no such item : '+ message)
-    }
-  })
-
-  client.on('disconnect',function(){
-    console.log('deco')
-    delete clientsList[client.id];
-    delete playersList[client.id];
-  })
+    })
 
   });
 }

@@ -1,30 +1,45 @@
 <div class="be-content">
   <div class="main-content container-fluid not-full">
     <div class="row">
-      <div class="col-sm-12 col-md-6 col-lg-3">
-        <div class="panel panel-default panel-border-color panel-border-color-ouistipix" style="text-align: center">
-          <div class="form-group">
-            <label class="btn btn-default" style="margin-top:10px;">
-              Changer d'image <form encType="multipart/form-data" style="margin: 0px;"><input type="file" ngf-select ng-model="picFile" name="image" accept="image/*" ngf-max-size="2MB" required ngf-model-invalid="errorFile" style="display: none;"></form> 
-            </label>
+      <div class="panel panel-border-color panel-border-color-ouistipix" style="text-align: center">
+        <div class="panel-body">
+          <div class="row">
+            <div>
+              <h3>{{user.username}}</h3>
+            </div>
           </div>
-          <div class="form-group">
-            <form id="my-awesome-dropzone" encType="application/json" action="assets/lib/dropzone/upload.php" class="dropzone" style="padding:0px 0px 0px 0px; margin-left:20px; margin-right:20px">
-              <div style="width:100%; height:200px;">
-                <img id="uploadPicture" style="width:100%; height:100%;" ng-show="myForm.file.$valid" ngf-thumbnail="picFile" class="thumb"> 
+          <div class="row">
+            <div class="col-sm-12 col-md-6 col-lg-2">
+              <div class="form-group">
+                <label class="btn btn-default" style="margin-top:10px;">
+                  Changer d'image <form encType="multipart/form-data" style="margin: 0px;"><input type="file" ngf-select ng-model="picFile" name="image" accept="image/*" ngf-max-size="2MB" required ngf-model-invalid="errorFile" style="display: none;"></form> 
+                </label>
               </div>
-            </form>
-            <br>
-              <div class="progress" ng-show="picFile.progress >= 0">
-                <div style="width:{{picFile.progress}}%;" class="progress-bar progress-bar-striped active" ng-class="{'progress-bar-success' : picFile.result, 'progress-bar-primary' : !picFile.result}">
-                <span ng-hide="picFile.result">{{picFile.progress + '%'}}</span>
-                <span ng-show="picFile.result">Terminé</span></div>
+              <div class="form-group">
+                <form id="my-awesome-dropzone" encType="application/json" action="assets/lib/dropzone/upload.php" class="dropzone" style="padding:0px 0px 0px 0px; margin-left:auto; margin-right:auto">
+                  <div style="width:100%; height:200px;">
+                    <img id="uploadPicture" style="width:100%; height:100%;" ng-show="myForm.file.$valid" ngf-thumbnail="picFile" class="thumb"> 
+                  </div>
+                </form>
+                <br>
+                  <div class="progress" ng-show="picFile.progress >= 0">
+                    <div style="width:{{picFile.progress}}%;" class="progress-bar progress-bar-striped active" ng-class="{'progress-bar-success' : picFile.result, 'progress-bar-primary' : !picFile.result}">
+                    <span ng-hide="picFile.result">{{picFile.progress + '%'}}</span>
+                    <span ng-show="picFile.result">Terminé</span></div>
+                  </div>
+                <span class="err" ng-show="errorMsg">{{errorMsg}}</span>
               </div>
-            <span class="err" ng-show="errorMsg">{{errorMsg}}</span>
-          </div>
-          <div class="form-group">
-            <button type="button" data-dismiss="modal" class="btn btn-xl btn-default md-close">Annuler</button>
-            <button id="createButton" type="button" class="btn btn-xl btn-ouistipix" ng-click="validateEdit()">Valider</button>
+              <div class="form-group">
+                <button type="button" data-dismiss="modal" class="btn btn-xl btn-default md-close">Annuler</button>
+                <button id="createButton" type="button" class="btn btn-xl btn-ouistipix" ng-click="validateEdit()">Valider</button>
+              </div>
+            </div>
+            <!-- <div class="col-sm-12 col-md-6 col-lg-6">
+              <div class="form-group">
+                <label>Nom</label>
+                <input type="text" placeholder="Nom" class="form-control" ng-model="data.name">
+              </div>
+            </div> -->
           </div>
         </div>
       </div>
