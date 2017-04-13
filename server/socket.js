@@ -38,14 +38,20 @@ module.exports.default = function(io) {
     var player = {}
 
     client.on('sendUserInformation', function (data) {
-      client.User = data
+      client.User = data.user
       clientsList[client.id] = client;
+      client.room = data.roomId
+      client.join(data.roomId)
       var clientList = []
+      _.map(clientsList, function(newClient){
+        var thisClient = {
+          User : newClient.User,
+          room : newClient.room
+        }
+        clientList.push(thisClient)
+      })
       for(var i in clientsList){
-        clientList.push(clientsList[i].User)
-      }
-      for(var i in clientsList){
-        clientsList[i].emit('newClientInformations', clientList);
+        clientsList[i].in(data.roomId).emit('newClientInformations', clientList);
       }
     });
 

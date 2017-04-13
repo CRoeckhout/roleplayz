@@ -81,6 +81,11 @@ Promise.each([
       email: "Thilun003@gmail.com",
       username: "Thilun",
       password: 'kad',
+    },{
+      _id: "092b1ccc-e3f7-4b29-8eb2-9380e8eb050b",
+      email: "ychnoala003@hotmail.fr",
+      username: "Ychno",
+      password: 'kad',
     }])
     .then(() => {
       console.log('finished populating users');

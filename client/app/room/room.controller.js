@@ -6,11 +6,11 @@ angular.module('rpgApp').controller('RoomController', function ($scope, $statePa
 	vm.isConnected = false;
 	vm.player = {}
 	vm.isFocused = true;
-	var socket = mySocket.connect()
 	var canvasElem = document.getElementById("cnv");
 	var canvas = document.getElementById("cnv").getContext("2d");
 	var chatBox = document.getElementById("chatBox");
 	var chatInput = document.getElementById("chatInput");
+	var socket = mySocket.connect()
 
 	canvasElem.width = 945;
 	canvasElem.height = 630;
@@ -18,7 +18,11 @@ angular.module('rpgApp').controller('RoomController', function ($scope, $statePa
 	canvas.font = "30px Arial";
 
 	setTimeout(function(){
-		mySocket.emit('sendUserInformation', Auth.getCurrentUser())
+		var data = {
+			roomId : $stateParams.roomId,
+			user : Auth.getCurrentUser()
+		}
+		mySocket.emit('sendUserInformation', data)
 	},0)
 
 	mySocket.on('newClientInformations', function(clientList){
