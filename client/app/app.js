@@ -1,6 +1,8 @@
 'use strict';
 
-var rpgApp = angular.module("rpgApp", ['ui.bootstrap' ,'ui.router', 'btford.socket-io', 'ngCookies', 'ngResource', 'ngAnimate', 'ngFileUpload'])
+var rpgApp = angular.module("rpgApp", ['ui.bootstrap' ,'ui.router', 'ngCookies', 'ngResource', 'ngAnimate', 'ngFileUpload'])
+
+var mySocket = io().connect({transports: ['websocket'], upgrade: false})
 
 rpgApp.config(function($urlRouterProvider, $stateProvider, $locationProvider, $httpProvider) {
   $stateProvider
@@ -61,9 +63,9 @@ rpgApp.config(function($urlRouterProvider, $stateProvider, $locationProvider, $h
   $httpProvider.interceptors.push('authInterceptor');
 })
 
-.factory('mySocket', function (socketFactory) {
-  return socketFactory();
-})
+/*.factory('AppSocket', function (socketFactory) {
+  return socketFactory;
+})*/
 
 /*.factory('Socket', function (socketFactory) {
   return socketFactory;
@@ -227,14 +229,15 @@ rpgApp.config(function($urlRouterProvider, $stateProvider, $locationProvider, $h
   return Auth
 })
 
-.run(function ($rootScope, $state, Auth, mySocket) {
+.run(function ($rootScope, $state, Auth) {
   $rootScope.config = {
     baseUrl : "http://localhost:9002"
   }
 
   $rootScope.$on('$stateChangeStart', function(event, next) {
+    console.log(next.name)
     if(next.name != 'room'){
-      mySocket.disconnect()
+        mySocket.emit('disconnect', 'from route')
     }
     
     if(next.name === "login" || next.name === "signup"){

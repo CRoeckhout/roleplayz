@@ -1,7 +1,7 @@
 'use strict';
 
 
-angular.module('rpgApp').controller('RoomController', function ($scope, $stateParams, mySocket, Controls, Auth) {
+angular.module('rpgApp').controller('RoomController', function ($scope, $rootScope, $stateParams, Controls, Auth) {
 	var vm = $scope
 	vm.isConnected = false;
 	vm.player = {}
@@ -10,22 +10,40 @@ angular.module('rpgApp').controller('RoomController', function ($scope, $statePa
 	var canvas = document.getElementById("cnv").getContext("2d");
 	var chatBox = document.getElementById("chatBox");
 	var chatInput = document.getElementById("chatInput");
-	var socket = mySocket.connect()
 
 	canvasElem.width = 945;
 	canvasElem.height = 630;
 
 	canvas.font = "30px Arial";
 
-	setTimeout(function(){
+/*	setTimeout(function(){
 		var data = {
 			roomId : $stateParams.roomId,
 			user : Auth.getCurrentUser()
 		}
 		mySocket.emit('sendUserInformation', data)
+	},0)*/
+
+	setTimeout(function(){
+		mySocket.emit('sendUserInformation', $stateParams.roomId, Auth.getCurrentUser())
 	},0)
 
+  mySocket.on('joinnedRoom',function(clientList){
+		vm.clientsList = clientList
+  })
+
+
+  mySocket.on('leftRoom',function(clientList){
+		vm.clientsList = clientList
+  })
+
+
 	mySocket.on('newClientInformations', function(clientList){
+		console.log(clientList)
+		vm.clientsList = clientList
+	})
+
+	mySocket.on('newClientInformationss', function(clientList){
 		console.log(clientList)
 		vm.clientsList = clientList
 	})
@@ -69,6 +87,10 @@ angular.module('rpgApp').controller('RoomController', function ($scope, $statePa
 		console.log('Bye', data)
 	})
 
+	$scope.$on('$destroy', function(){
+		console.log('hello')
+		mySocket.emit('disconnect', 'from controller')
+	})
 
 /*var gradient=canvas.createLinearGradient(0,0,canvasElem.width,0);
 	gradient.addColorStop("0","magenta");
@@ -88,11 +110,11 @@ angular.module('rpgApp').controller('RoomController', function ($scope, $statePa
 	  }
 	})
 
-	window.onbeforeunload = function () {
+/*	window.onbeforeunload = function () {
 	    mySocket.emit('trytoDc', mySocket)
 	    mySocket.emit('disconnect', mySocket)
 	};
-
+*/
 	document.onkeydown = function(event){
 		if(vm.isFocused){
 	 		if(Controls.get(event.keyCode) === 'left') mySocket.emit('keyPress', {action : 'left', state : true}) // Left

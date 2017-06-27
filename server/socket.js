@@ -3,8 +3,6 @@
 var path = require('path');
 var uuid = require('uuid');
 var _ = require('lodash');
-var clientsList = {};
-var playersList = {};
 
 function Player(id){
   var self = {
@@ -32,17 +30,45 @@ function Player(id){
 }
 
 module.exports.default = function(io) {
-  io.on('connection', function (client) {
+  var clientsList = {};
+  var playersList = {};
+  var rooms = [];
+
+  io.sockets.on('connection', function (client) {
+    console.log('=============================== connection ===============================')
     console.log('connection')
-    client.id = uuid.v4();
+    console.log('=============================== connection ===============================')
+
     var player = {}
+    clientsList[client.id] = client;
+    client.on('joinRoom', function(roomId, user){
+      client.room = roomId
+/*      if(getRoom(roomId).length == 0){
+        rooms.push({id:roomId})
+      }
+      var room = rooms[IndexByKey(rooms, "id", roomId)]
+      if(!room.Clients){
+        room.Clients = []
+        room.Users = []
+      }
+      // client.user = user
+      room.Clients.push(client)
+      room.Users.push(user)
+      _.forEach(room.Clients, function(roomClient){
+        roomClient.emit('joinnedRoom',room.Users)
+      })*/
+    })
 
     client.on('sendUserInformation', function (data) {
       client.User = data.user
       clientsList[client.id] = client;
       client.room = data.roomId
-      client.join(data.roomId)
-      var clientList = []
+      client.join(data.roomId, function(){
+        console.log(client.rooms);
+        client.in(data.roomId).emit('newClientInformationss', { some: 'data' });
+      });
+
+     var clientList = []
       _.map(clientsList, function(newClient){
         var thisClient = {
           User : newClient.User,
@@ -99,32 +125,53 @@ module.exports.default = function(io) {
       }
     })
 
-    client.on('disconnect',function(){
-      console.log('deco')
-      delete clientsList[client.id];
-      delete playersList[client.id];
-      var clientList = []
-      for(var i in clientsList){
-        clientList.push(clientsList[i].User)
-      }
-      for(var i in clientsList){
-        clientsList[i].emit('newClientInformations', clientList);
+    client.on('leftRoom',function(){
+      console.log(client.room)
+      var room = rooms[IndexByKey(rooms, "id", client.room)]
+      if(room) {
+        room.Clients = room.Clients.slice(room.Clients[IndexByKey(room.Clients, "id", client.id)], 1)
+        _.forEach(room.Clients, function(roomClient){
+          roomClient.emit('leftRoom',room.Users)
+        })
       }
     })
 
+    client.on('disconnect',function(){
+      console.log('=============================== DECONNECTION ===============================')
+      console.log('DECONNECTION', client.id)
+      console.log('=============================== DECONNECTION ===============================')
+    })
+
   });
+
+  setInterval(function(){
+    var pack = [];
+    for(var i in playersList){
+      var player = playersList[i]
+      player.updatePosition()
+      pack.push({id:player.id,x:player.x, y:player.y})
+    }
+
+    for(var i in clientsList){
+      var client = clientsList[i];
+      client.emit('newPositions', pack);
+    }
+  },1000/25)
+
+  function getRoom(roomId){
+    return _.filter(rooms, function(room){
+      if(room.id == roomId) return room
+    })
+  }
+
+  function IndexByKey(arraytosearch, key, valuetosearch) {
+   
+    for (var i = 0; i < arraytosearch.length; i++) {
+      if (arraytosearch[i][key] == valuetosearch) {
+        return i;
+      }
+    }
+    return null;
+  }
+
 }
-
-setInterval(function(){
-  var pack = [];
-  for(var i in playersList){
-    var player = playersList[i]
-    player.updatePosition()
-    pack.push({id:player.id,x:player.x, y:player.y, user:player.User})
-  }
-
-  for(var i in clientsList){
-    var client = clientsList[i];
-    client.emit('newPositions', pack);
-  }
-},1000/25)
