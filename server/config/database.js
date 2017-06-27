@@ -7,7 +7,7 @@ var sequelize;
 
 var db = {
   Sequelize,
-  sequelize : new Sequelize('mysql://root:kadro@192.168.1.28/roleplayz', {
+  sequelize : new Sequelize('mysql://root:kadro@localhost/roleplayz', {
   	logging: false,
   	timezone: '+02:00'
   })
